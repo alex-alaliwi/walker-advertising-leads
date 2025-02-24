@@ -1,0 +1,73 @@
+<div class="container">
+  <h1>Leads Management</h1>
+
+  <div class="content">
+
+    <div class="lead-form">
+      <h2>Add New Lead</h2>
+      <form (submit)="addLead()">
+        <label>Name:</label>
+        <input type="text" name="name" [(ngModel)]="newLead.name" required>
+
+        <label>Phone Number:</label>
+        <input type="text" name="phoneNumber" [(ngModel)]="newLead.phoneNumber" required>
+
+        <label>Zip Code:</label>
+        <input type="text" name="zipCode" [(ngModel)]="newLead.zipCode" required>
+
+        <label>
+          <input type="checkbox" name="canReceiveText" [(ngModel)]="newLead.canReceiveText">
+          Receive Text
+        </label>
+
+        <label>
+          <input type="checkbox" name="canReceiveEmail" [(ngModel)]="newLead.canReceiveEmail">
+          Receive Email
+        </label>
+
+        <label>Email (Optional):</label>
+        <input type="email" name="email" [(ngModel)]="newLead.email">
+
+        <button type="submit">Add Lead</button>
+      </form>
+    </div>
+
+    <div class="lead-list">
+      <h2>Leads List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Zip Code</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lead of leads; trackBy: trackById" @fadeInOut>
+            <td>{{ lead.name }}</td>
+            <td>{{ lead.phoneNumber }}</td>
+            <td>{{ lead.zipCode }}</td>
+            <td>
+              <button class="view-btn" (click)="selectLead(lead)">View</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="modal-overlay" *ngIf="selectedLead" @fadeInOut (click)="closeDetails()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>Lead Details</h2>
+      <p><strong>Name:</strong> {{ selectedLead?.name }}</p>
+      <p><strong>Phone Number:</strong> {{ selectedLead?.phoneNumber }}</p>
+      <p><strong>Zip Code:</strong> {{ selectedLead?.zipCode }}</p>
+      <p><strong>Receive Text:</strong> {{ selectedLead?.canReceiveText ? 'Yes' : 'No' }}</p>
+      <p><strong>Receive Email:</strong> {{ selectedLead?.canReceiveEmail ? 'Yes' : 'No' }}</p>
+      <p><strong>Email:</strong> {{ selectedLead?.email ? selectedLead?.email : 'N/A' }}</p>
+      <button class="close-btn" (click)="closeDetails()">Close</button>
+    </div>
+  </div>
+</div>
